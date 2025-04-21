@@ -84,6 +84,27 @@ jobs:
             --store vincent-store-dev.myshopify.com \
             --password ${{ secrets.SHOPIFY_CLI_THEME_TOKEN }}
 
+  delete-development-theme:
+    if: github.event.action == 'closed' && github.event.pull_request.merged == true
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18' # Use the Node.js version you need
+
+      - name: Install Shopify CLI
+        run: npm install -g @shopify/cli @shopify/theme
+
+      - name: Set theme name to branch name
+        id: set-theme-name
+        run: echo "THEME_NAME=$(echo ${GITHUB_HEAD_REF} | tr / -)" >> $GITHUB_ENV
+
+      - name: Delete development theme
+        run: |
+          shopify theme delete --name ${{ env.THEME_NAME }} --store vincent-store-dev.myshopify.com --password ${{ secrets.SHOPIFY_CLI_THEME_TOKEN }} --force
+
   deploy-staging:
     if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'main'
     runs-on: ubuntu-latest
