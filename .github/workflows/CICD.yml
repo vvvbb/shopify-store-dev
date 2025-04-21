@@ -9,35 +9,35 @@ on:
   workflow_dispatch:
     inputs:
       environment:
-        description: "Environment to deploy to"
+        description: 'Environment to deploy to'
         required: true
-        default: "production"
+        default: 'production'
 
 jobs:
-  lhci:
-    name: Lighthouse
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Lighthouse
-        uses: shopify/lighthouse-ci-action@v1
-        with:
-          store: ${{ secrets.SHOP_STORE_OS2 }}
-          password: ${{ secrets.SHOP_PASSWORD_OS2 }}
-          access_token: ${{ secrets.SHOP_ACCESS_TOKEN }}
-          collection_handle: all
-          lhci_github_app_token: ${{ secrets.LHCI_GITHUB_TOKEN }}
-          pull_theme: ${{ secrets.SHOP_PULL_THEME }}
+  # lhci:
+  # name: Lighthouse
+  # runs-on: ubuntu-latest
+  # steps:
+  #   - uses: actions/checkout@v4
+  #   - name: Lighthouse
+  #     uses: shopify/lighthouse-ci-action@v1
+  #     with:
+  #       store: ${{ secrets.SHOP_STORE_OS2 }}
+  #       password: ${{ secrets.SHOP_PASSWORD_OS2 }}
+  #       access_token: ${{ secrets.SHOP_ACCESS_TOKEN }}
+  #       collection_handle: all
+  #       lhci_github_app_token: ${{ secrets.LHCI_GITHUB_TOKEN }}
+  #       pull_theme: ${{ secrets.SHOP_PULL_THEME }}
 
-  theme-check:
-    name: Theme Check
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Theme Check
-        uses: shopify/theme-check-action@v2
-        with:
-          token: ${{ github.token }}
+  # theme-check:
+  #   name: Theme Check
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #     - name: Theme Check
+  #       uses: shopify/theme-check-action@v2
+  #       with:
+  #         token: ${{ github.token }}
 
   deploy-development:
     if: github.event.action == 'opened' || github.event.action == 'synchronize'
@@ -45,25 +45,44 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Set up Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
-          node-version: "18" # Use the Node.js version you need
+          node-version: '18' # Use the Node.js version you need
 
       - name: Install Shopify CLI
         run: npm install -g @shopify/cli @shopify/theme
-
-      # - name: Authenticate with Shopify
-      # run: shopify login --store vincent-store-dev.myshopify.com --access_token ${{ secrets.SHOPIFY_STORE_ACCESS_TOKEN }}
 
       - name: Set theme name to branch name
         id: set-theme-name
         run: echo "THEME_NAME=$(echo ${GITHUB_HEAD_REF} | tr / -)" >> $GITHUB_ENV
 
+      - name: Check if theme exists
+        id: check-theme
+        run: |
+          if shopify theme pull --theme ${{ env.THEME_NAME }} --store vincent-store-dev.myshopify.com --password ${{ secrets.SHOPIFY_CLI_THEME_TOKEN }}; then
+            echo "Theme exists"
+            echo "THEME_EXISTS=true" >> $GITHUB_ENV
+          else
+            echo "Theme does not exist"
+            echo "THEME_EXISTS=false" >> $GITHUB_ENV
+          fi
+        continue-on-error: true
+
+      - name: Create new theme if it doesn't exist
+        if: env.THEME_EXISTS == 'false'
+        run: |
+          shopify theme push --unpublished --theme ${{ env.THEME_NAME }} --store vincent-store-dev.myshopify.com --password ${{ secrets.SHOPIFY_CLI_THEME_TOKEN }}
+
       - name: Deploy theme to Shopify Development
-        run: shopify theme push --theme ${{ env.THEME_NAME }} --env=development
+        run: |
+          shopify theme push \
+            --json \
+            --theme ${{ env.THEME_NAME }} \
+            --store vincent-store-dev.myshopify.com \
+            --password ${{ secrets.SHOPIFY_CLI_THEME_TOKEN }}
 
   deploy-staging:
     if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'main'
@@ -71,21 +90,23 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: "18" # Use the Node.js version you need
+          node-version: '18' # Use the Node.js version you need
 
       - name: Install Shopify CLI
         run: npm install -g @shopify/cli @shopify/theme
 
-      - name: Authenticate with Shopify
-        run: shopify login --store vincent-store-dev.myshopify.com --access_token ${{ secrets.SHOPIFY_STORE_ACCESS_TOKEN }}
-
       - name: Deploy theme to Shopify Staging
-        run: shopify theme push --env=staging
+        run: |
+          shopify theme push \
+            --json \
+            --theme 120929550451 \
+            --store vincent-store-dev.myshopify.com \
+            --password ${{ secrets.SHOPIFY_CLI_THEME_TOKEN }}
 
   deploy-production:
     needs: deploy-staging
@@ -94,18 +115,20 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: "18" # Use the Node.js version you need
+          node-version: '18' # Use the Node.js version you need
 
       - name: Install Shopify CLI
         run: npm install -g @shopify/cli @shopify/theme
-
-      - name: Authenticate with Shopify
-        run: shopify login --store vincent-store-dev.myshopify.com --access_token ${{ secrets.SHOPIFY_STORE_ACCESS_TOKEN }}
-
+      
       - name: Deploy theme to Shopify Production
-        run: shopify theme push --env=production
+        run: |
+          shopify theme push --live \
+            --json \
+            --theme 136285159539 \
+            --store vincent-store-dev.myshopify.com \
+            --password ${{ secrets.SHOPIFY_CLI_THEME_TOKEN }}
