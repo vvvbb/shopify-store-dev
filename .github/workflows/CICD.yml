@@ -63,7 +63,7 @@ jobs:
         run: echo "THEME_NAME=$(echo ${GITHUB_HEAD_REF} | tr / -)" >> $GITHUB_ENV
 
       - name: Deploy theme to Shopify Development
-        run: shopify theme push --theme ${{ env.THEME_NAME }} --store=vincent-store-dev.myshopify.com --access_token ${{ secrets.SHOPIFY_STORE_ACCESS_TOKEN }}
+        run: shopify theme push --theme ${{ env.THEME_NAME }} --store=vincent-store-dev.myshopify.com
 
   deploy-staging:
     if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'main'
