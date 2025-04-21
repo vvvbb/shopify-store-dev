@@ -48,7 +48,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Set up Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: "18" # Use the Node.js version you need
 
@@ -63,7 +63,12 @@ jobs:
         run: echo "THEME_NAME=$(echo ${GITHUB_HEAD_REF} | tr / -)" >> $GITHUB_ENV
 
       - name: Deploy theme to Shopify Development
-        run: shopify theme push --theme ${{ env.THEME_NAME }} --store=vincent-store-dev.myshopify.com
+        run: |
+            shopify theme push \
+              --json \
+              --theme ${{ env.THEME_NAME }} \
+              --store vincent-store-dev.myshopify.com} \
+              --password ${{ secrets.SHOPIFY_CLI_THEME_TOKEN }}
 
   deploy-staging:
     if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'main'
