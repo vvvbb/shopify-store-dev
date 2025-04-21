@@ -69,8 +69,7 @@ jobs:
         run: |
             shopify theme push \
               --theme ${{ env.THEME_NAME }} \
-              --store vincent-store-dev.myshopify.com} \
-              --password=${{ secrets.SHOPIFY_CLI_THEME_TOKEN }}
+              --store vincent-store-dev.myshopify.com}
 
   deploy-staging:
     if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'main'
