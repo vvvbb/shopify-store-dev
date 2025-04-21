@@ -62,9 +62,26 @@ jobs:
         id: set-theme-name
         run: echo "THEME_NAME=$(echo ${GITHUB_HEAD_REF} | tr / -)" >> $GITHUB_ENV
 
+      - name: Check if theme exists
+        id: check-theme
+        run: |
+          if shopify theme pull --theme ${{ env.THEME_NAME }} --store vincent-store-dev.myshopify.com --password ${{ secrets.SHOPIFY_CLI_THEME_TOKEN }}; then
+            echo "Theme exists"
+            echo "THEME_EXISTS=true" >> $GITHUB_ENV
+          else
+            echo "Theme does not exist"
+            echo "THEME_EXISTS=false" >> $GITHUB_ENV
+          fi
+        continue-on-error: true
+
+      - name: Create new theme if it doesn't exist
+        if: env.THEME_EXISTS == 'false'
+        run: |
+          shopify theme push --unpublished --theme ${{ env.THEME_NAME }} --store vincent-store-dev.myshopify.com --password ${{ secrets.SHOPIFY_CLI_THEME_TOKEN }}
+
       - name: Deploy theme to Shopify Development
         run: |
-          shopify theme push -u \
+          shopify theme push \
             --json \
             --theme ${{ env.THEME_NAME }} \
             --store vincent-store-dev.myshopify.com \
