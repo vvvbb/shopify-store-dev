@@ -103,7 +103,7 @@ jobs:
 
       - name: Delete development theme
         run: |
-          shopify theme delete --name ${{ env.THEME_NAME }} --store vincent-store-dev.myshopify.com --password ${{ secrets.SHOPIFY_CLI_THEME_TOKEN }} --force
+          shopify theme delete --theme ${{ env.THEME_NAME }} --store vincent-store-dev.myshopify.com --password ${{ secrets.SHOPIFY_CLI_THEME_TOKEN }} --force
 
   deploy-staging:
     if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'main'
