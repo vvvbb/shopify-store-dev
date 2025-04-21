@@ -65,10 +65,9 @@ jobs:
       - name: Deploy theme to Shopify Development
         run: |
             shopify theme push \
-              --json \
               --theme ${{ env.THEME_NAME }} \
               --store vincent-store-dev.myshopify.com} \
-              --password ${{ secrets.SHOP_ACCESS_TOKEN }}
+              --password ${{ secrets.SHOPIFY_CLI_THEME_TOKEN }}
 
   deploy-staging:
     if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'main'
