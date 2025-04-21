@@ -62,6 +62,9 @@ jobs:
         id: set-theme-name
         run: echo "THEME_NAME=$(echo ${GITHUB_HEAD_REF} | tr / -)" >> $GITHUB_ENV
 
+      - name: Echo
+        run: echo "Theme name is ${{ env.THEME_NAME }}"
+
       - name: Deploy theme to Shopify Development
         run: |
             shopify theme push \
