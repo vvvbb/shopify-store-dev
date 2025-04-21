@@ -67,7 +67,7 @@ jobs:
           shopify theme push \
             --json \
             --theme ${{ env.THEME_NAME }} \
-            --store vincent-store-dev.myshopify.com} \
+            --store vincent-store-dev.myshopify.com \
             --password ${{ secrets.SHOPIFY_CLI_THEME_TOKEN }}
 
   deploy-staging:
