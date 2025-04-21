@@ -1,0 +1,11 @@
+[environments.development]
+store = "my-store"
+password  = "shptka_123456"
+
+[environments.env2]
+store = "another-store"
+path = "./dist"
+ignore = ["sections/announcement-bar.liquid", "sections/header.liquid"]
+output = "json"
+live = true
+allow-live = true
