@@ -1,6 +1,14 @@
-# Launch commands
+# Requires
+- Node v22
+- Shopify CLI https://shopify.dev/docs/api/shopify-cli/theme
+- Vite - vite-plugin-shopify https://www.npmjs.com/package/vite-plugin-shopify
+- Tailwind
 
-`npm run dev` Launch store
+# Launch commands
+```sh
+npm run vite # Launch Vite compiler Scss + js
+npm run dev # Launch server Shopify
+```
 
 # Dawn
 
