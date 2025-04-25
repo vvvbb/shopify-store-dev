@@ -50,7 +50,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '18' # Use the Node.js version you need
+          node-version: '22' # Use the Node.js version you need
 
       - name: Install Dependencies
         run: npm install
@@ -98,7 +98,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '18' # Use the Node.js version you need
+          node-version: '22' # Use the Node.js version you need
 
       - name: Install Shopify CLI
         run: npm install -g @shopify/cli @shopify/theme
@@ -122,7 +122,13 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '18' # Use the Node.js version you need
+          node-version: '22' # Use the Node.js version you need
+
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Build with Vite
+        run: npm run vite:build
 
       - name: Install Shopify CLI
         run: npm install -g @shopify/cli @shopify/theme
@@ -147,7 +153,13 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '18' # Use the Node.js version you need
+          node-version: '22' # Use the Node.js version you need
+
+      - name: Install Dependencies
+        run: npm install
+  
+      - name: Build with Vite
+        run: npm run vite:build
 
       - name: Install Shopify CLI
         run: npm install -g @shopify/cli @shopify/theme
