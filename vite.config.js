@@ -1,8 +1,13 @@
+import { defineConfig } from 'vite';
 import shopify from 'vite-plugin-shopify';
+import tailwindcss from '@tailwindcss/vite';
 
-export default {
+/* export default defineConfig({
+  plugins: [tailwindcss()],
+}); */
+
+export default defineConfig({
   plugins: [
-    /* Plugin options are not required, defaults shown */
     shopify({
       // Root path to your Shopify theme directory (location of snippets, sections, templates, etc.)
       themeRoot: './',
@@ -21,5 +26,6 @@ export default {
       // Specifies whether to use the @shopify/theme-hot-reload script to enable hot reloading for the theme
       themeHotReload: true,
     }),
+    tailwindcss(),
   ],
-};
+});
