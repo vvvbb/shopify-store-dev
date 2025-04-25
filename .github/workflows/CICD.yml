@@ -52,6 +52,12 @@ jobs:
         with:
           node-version: '18' # Use the Node.js version you need
 
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Build with Vite
+        run: npm run vite:build
+
       - name: Install Shopify CLI
         run: npm install -g @shopify/cli @shopify/theme
 
