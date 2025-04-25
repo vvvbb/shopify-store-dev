@@ -1,0 +1,129 @@
+{% if section.settings.title != blank %}
+  <h2 class="text-center">{{ section.settings.title }}</h2>
+{% endif %}
+
+{% if section.settings.description != blank %}
+  <p class="text-center">{{ section.settings.description }}</p>
+{% endif %}
+
+<slider-products
+  class="slider-products swiper mt-10"
+  data-params='
+    {
+      "slidesPerView": {{ section.settings.slides_per_view | default: 2.3 }},
+      "spaceBetween": {{ section.settings.space_between | default: 10 }},
+      "loop": {{ section.settings.loop | default: true }},
+      "autoplay": {{ section.settings.autoplay | default: false }}
+    }
+  '
+  data-pagination="{{ section.settings.pagination | default: false }}"
+  data-navigation="{{ section.settings.navigation | default: false }}"
+  data-scrollbar="{{ section.settings.scrollbar | default: false }}"
+>
+  <div class="slider-products__container swiper-wrapper">
+    {% assign collection = collections[section.settings.collection] %}
+    {% assign max_products = section.settings.max_collection %}
+    {% assign products = collection.products %}
+
+    {% for product in products limit: max_products %}
+      <div class="slider-products__item swiper-slide">
+        {% render 'card-product', card_product: product %}
+      </div>
+    {% endfor %}
+
+    {% for block in section.blocks %}
+      <script>
+        console.log('block', {{ block.settings.product | json }})
+      </script>
+      <div class="slider-products__item swiper-slide">
+        {% render 'card-product', card_product: block.settings.product %}
+      </div>
+    {% endfor %}
+  </div>
+
+  {% if section.settings.pagination %}
+    <div class="swiper-pagination"></div>
+  {% endif %}
+
+  {% if section.settings.navigation %}
+    <div class="swiper-button-prev !block"></div>
+    <div class="swiper-button-next !block"></div>
+  {% endif %}
+
+  {% if section.settings.scrollbar %}
+    <div class="swiper-scrollbar !block [&>div]:!block"></div>
+  {% endif %}
+</slider-products>
+
+{% schema %}
+{
+  "name": "Slider Products",
+  "tag": "section",
+  "class": "slider-products",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "Slider Products"
+    },
+    {
+      "type": "text",
+      "id": "description",
+      "label": "Description"
+    },
+    {
+      "type": "header",
+      "content": "Collection Selection"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "number",
+      "id": "max_collection",
+      "label": "Maximum number of products to show"
+    },
+    {
+      "type": "header",
+      "content": "Slider Parameters"
+    },
+    {
+      "type": "checkbox",
+      "id": "pagination",
+      "label": "Pagination"
+    },
+    {
+      "type": "checkbox",
+      "id": "navigation",
+      "label": "Navigation"
+    },
+    {
+      "type": "checkbox",
+      "id": "scrollbar",
+      "label": "Scrollbar"
+    },
+    {
+      "type": "checkbox",
+      "id": "loop",
+      "label": "Loop"
+    }
+  ],
+  "max_blocks": 5,
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Product",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

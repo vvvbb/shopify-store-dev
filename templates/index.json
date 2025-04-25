@@ -46,6 +46,9 @@
         "show_text_below": false
       }
     },
+    "slider_products":{
+      "type": "slider-products"
+    },
     "rich_text": {
       "type": "rich-text",
       "blocks": {
@@ -201,6 +204,7 @@
   },
   "order": [
     "image_banner",
+    "slider_products",
     "rich_text",
     "featured_collection",
     "collage",

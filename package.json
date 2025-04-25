@@ -25,6 +25,7 @@
   },
   "homepage": "https://github.com/vvvbb/shopify-store-dev#readme",
   "dependencies": {
+    "swiper": "^11.2.6",
     "vite-plugin-shopify": "^4.0.0"
   },
   "devDependencies": {
