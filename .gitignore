@@ -36,3 +36,6 @@ dist-ssr
 
 # Vite
 snippets/vite-tag.liquid
+assets/manifest.json
+assets/theme.css
+assets/theme.js

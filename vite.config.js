@@ -7,6 +7,18 @@ import tailwindcss from '@tailwindcss/vite';
 }); */
 
 export default defineConfig({
+  build: {
+    emptyOutDir: false,
+    cssMinify: true,
+    manifest: 'manifest.json',
+    rollupOptions: {
+      output: {
+        entryFileNames: `[name].js`,
+        chunkFileNames: `[name].js`,
+        assetFileNames: `[name].[ext]`,
+      },
+    },
+  },
   plugins: [
     shopify({
       // Root path to your Shopify theme directory (location of snippets, sections, templates, etc.)
