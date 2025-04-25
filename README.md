@@ -1,3 +1,15 @@
+# Requires
+- Node v22
+- Shopify CLI https://shopify.dev/docs/api/shopify-cli/theme
+- Vite - vite-plugin-shopify https://www.npmjs.com/package/vite-plugin-shopify
+- Tailwind
+
+# Launch commands
+```sh
+npm run vite # Launch Vite compiler Scss + js
+npm run dev # Launch server Shopify
+```
+
 # Dawn
 
 [![Build status](https://github.com/shopify/dawn/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/Shopify/dawn/actions/workflows/ci.yml?query=branch%3Amain)

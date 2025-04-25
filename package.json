@@ -1,0 +1,37 @@
+{
+  "name": "shopify-store-dev",
+  "version": "1.0.0",
+  "description": "[![Build status](https://github.com/shopify/dawn/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/Shopify/dawn/actions/workflows/ci.yml?query=branch%3Amain) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?color=informational)](/.github/CONTRIBUTING.md)",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "shopify theme dev --store=vincent-store-dev.myshopify.com",
+    "build": "shopify theme build",
+    "deploy": "shopify theme push --store=vincent-store-dev.myshopify.com",
+    "deploy:prod": "shopify theme push --store=vincent-store-dev.myshopify.com --env=production",
+    "deploy:staging": "shopify theme push --store=vincent-store-dev.myshopify.com --env=staging",
+    "vite": "vite",
+    "vite:build": "vite build",
+    "vite:preview": "vite preview"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vvvbb/shopify-store-dev.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vvvbb/shopify-store-dev/issues"
+  },
+  "homepage": "https://github.com/vvvbb/shopify-store-dev#readme",
+  "dependencies": {
+    "vite-plugin-shopify": "^4.0.0"
+  },
+  "devDependencies": {
+    "@tailwindcss/postcss": "^4.1.4",
+    "@tailwindcss/vite": "^4.1.4",
+    "postcss": "^8.5.3",
+    "tailwindcss": "^4.1.4",
+    "vite": "^6.3.3"
+  }
+}
