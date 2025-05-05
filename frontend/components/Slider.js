@@ -9,8 +9,6 @@ import 'swiper/css/scrollbar';
 class Slider extends HTMLElement {
   constructor() {
     super();
-    console.log('Slider initialized');
-
     this.swiper = null;
     this.defaultParameters = {
       direction: 'horizontal',
@@ -20,7 +18,6 @@ class Slider extends HTMLElement {
     };
     this.parameters = {};
   }
-  // Element functionality written in here
 
   connectedCallback() {
     const pagination = this.dataset.pagination === 'true';
@@ -60,7 +57,6 @@ class Slider extends HTMLElement {
       this.parameters.scrollbar = false;
     }
 
-    console.log('object', this.parameters);
     this.swiper = new Swiper(this, this.parameters);
   }
 

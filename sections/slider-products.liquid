@@ -32,9 +32,6 @@
     {% endfor %}
 
     {% for block in section.blocks %}
-      <script>
-        console.log('block', {{ block.settings.product | json }})
-      </script>
       <div class="slider-products__item swiper-slide">
         {% render 'card-product', card_product: block.settings.product %}
       </div>
@@ -46,12 +43,12 @@
   {% endif %}
 
   {% if section.settings.navigation %}
-    <div class="swiper-button-prev !block"></div>
-    <div class="swiper-button-next !block"></div>
+    <div class="swiper-button-prev"></div>
+    <div class="swiper-button-next"></div>
   {% endif %}
 
   {% if section.settings.scrollbar %}
-    <div class="swiper-scrollbar !block [&>div]:!block"></div>
+    <div class="swiper-scrollbar"></div>
   {% endif %}
 </slider-products>
 

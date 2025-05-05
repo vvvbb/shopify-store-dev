@@ -46,8 +46,50 @@
         "show_text_below": false
       }
     },
-    "slider_products":{
-      "type": "slider-products"
+    "slider_products": {
+      "type": "slider-products",
+      "blocks": {
+        "product_PHXemN": {
+          "type": "product",
+          "settings": {
+            "product": "black-leather-bag"
+          }
+        },
+        "product_9iKzDG": {
+          "type": "product",
+          "settings": {
+            "product": "blue-silk-tuxedo"
+          }
+        },
+        "product_xyNgWc": {
+          "type": "product",
+          "settings": {
+            "product": "chequered-red-shirt"
+          }
+        },
+        "product_6jmX6A": {
+          "type": "product",
+          "settings": {
+            "product": "yellow-wool-jumper"
+          }
+        }
+      },
+      "block_order": [
+        "product_PHXemN",
+        "product_9iKzDG",
+        "product_xyNgWc",
+        "product_6jmX6A"
+      ],
+      "settings": {
+        "title": "Slider Products",
+        "description": "Description lorem",
+        "collection": "frontpage",
+        "max_collection": 2,
+        "pagination": false,
+        "navigation": true,
+        "scrollbar": false,
+        "loop": true
+      }
     },
     "rich_text": {
       "type": "rich-text",
