@@ -274,11 +274,14 @@
     },
     "form_customer_info":{
       "type": "form-customer-info",
-
+    },
+    "api_graphql":{
+      "type": "api-graphql",
     }
   },
   "order": [
     "image_banner",
+    "api_graphql",
     "slider_products",
     "rich_text",
     "featured_collection",

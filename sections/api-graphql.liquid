@@ -1,0 +1,85 @@
+<script src="{{ 'api-graphql.js' | asset_url }}" defer="defer"></script>
+
+<h2 class="text-center">API GraphQL</h2>
+<p class="text-center pt-10">
+  This section is designed to be used with the GraphQL API. It allows you to make API calls and display the results on
+  your page. <br>
+  You can use this section to fetch data from your store and display it in a custom format. <br>
+  The section is designed to be flexible and can be used in various ways.
+</p>
+<api-graphql
+  class="flex flex-text-center pt-10 gap-20"
+  data-storefront-api-key="{{ section.settings.storefront_api_key }}"
+  data-admin-api-key="{{ section.settings.admin_api_key }}"
+>
+  <div class="w-1/2 border border-gray-300 text-center py-10">
+    <h3>Storefront API</h3>
+    <div class="flex flex-row justify-center py-10 gap-10">
+      <form class="flex flex-col gap-5" data-storefront-customer>
+        <input type="email" name="email" id="email" placeholder="Email">
+        <input type="password" name="password" id="password" placeholder="Password">
+        <button
+          type="submit"
+          class="cursor-pointer bg-blue-500 text-white py-2 px-4 rounded"
+        >
+          Get Customer Info
+        </button>
+      </form>
+      <button
+        class="cursor-pointer bg-blue-500 text-white py-2 px-4 rounded"
+        data-storefront-product
+      >
+        Product
+      </button>
+    </div>
+    <p data-storefront-data></p>
+  </div>
+
+  <div class="w-1/2 border border-gray-300 text-center py-10">
+    <h3>Admin API</h3>
+    <div class="flex flex-row justify-center py-10 gap-10">
+      <button
+        class="cursor-pointer bg-blue-500 text-white py-2 px-4 rounded"
+        data-admin-customer
+      >
+        Customer
+      </button>
+      <button
+        class="cursor-pointer bg-blue-500 text-white py-2 px-4 rounded"
+        data-admin-products
+      >
+        TEST
+      </button>
+    </div>
+    <p data-admin-data></p>
+  </div>
+</api-graphql>
+
+{% schema %}
+{
+  "name": "API GraphQL",
+  "tag": "section",
+  "class": "section py-20 px-40",
+  "settings": [
+    {
+      "type": "text",
+      "id": "storefront_api_key",
+      "label": "Storefront API Key",
+      "default": "{storefront_api_key}"
+    },
+    {
+      "type": "text",
+      "id": "admin_api_key",
+      "label": "Admin API Key",
+      "default": "{admin_api_key}"
+    }
+  ],
+
+  "presets": [
+    {
+      "name": "API GraphQL Preset",
+      "category": "Custom"
+    }
+  ]
+}
+{% endschema %}
