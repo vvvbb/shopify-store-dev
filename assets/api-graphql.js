@@ -12,6 +12,7 @@ class APIGraphQL extends HTMLElement {
     this.elStoreData = this.querySelector('p[data-storefront-data]');
 
     this.elBtnAdminCustomer = this.querySelector('button[data-admin-customer]');
+    this.elBtnAdminWebhook = this.querySelector('button[data-admin-webhook]');
     this.elAdminData = this.querySelector('p[data-admin-data]');
 
     const version = '2025-04';
@@ -28,6 +29,8 @@ class APIGraphQL extends HTMLElement {
     this.elBtnStoreProduct.addEventListener('click', this.handleStoreProduct.bind(this));
 
     this.elBtnAdminCustomer.addEventListener('click', this.handleAdminCustomer.bind(this));
+
+    this.elBtnAdminWebhook.addEventListener('click', this.handleAdminWebhook.bind(this));
 
     // this.handleAdminCustomer();
     // this.handleStoreCustomer();
@@ -102,6 +105,43 @@ class APIGraphQL extends HTMLElement {
 
     await this.fetchData(this.URL_storefront, headers, query).then((response) => {
       this.fillData(response.data.products, this.elStoreData);
+    });
+  }
+
+  async handleAdminWebhook() {
+    const query = `
+      query {
+        webhookSubscriptions(first: 2) {
+          edges {
+            node {
+              id
+              topic
+              endpoint {
+                __typename
+                ... on WebhookHttpEndpoint {
+                  callbackUrl
+                }
+                ... on WebhookEventBridgeEndpoint {
+                  arn
+                }
+                ... on WebhookPubSubEndpoint {
+                  pubSubProject
+                  pubSubTopic
+                }
+              }
+            }
+          }
+        }
+      }
+    `;
+
+    const headers = {
+      'X-Shopify-Access-Token': this.keyAdmin,
+    };
+
+    await this.fetchData(this.URL_admin, headers, query).then((response) => {
+      console.log('response', response);
+      this.fillData(response.data, this.elAdminData);
     });
   }
 
