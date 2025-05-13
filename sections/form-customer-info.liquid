@@ -1,0 +1,42 @@
+<script src="{{ 'form-customer-info.js' | asset_url }}" defer="defer"></script>
+
+<div class="bg-gray-300 py-20 px-40">
+  <h1 class="text-center text-2xl font-bold">Customer Information</h1>
+  <div class="flex flex-row justify-center items-center gap-20">
+    <div class="w-1/2">
+      <h2>Lorem, ipsum dolor.</h2>
+      <p>
+        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nisi harum consectetur dolore voluptatum itaque autem,
+        cum illo explicabo animi fugiat officia et laudantium porro ullam quibusdam obcaecati doloribus ex molestias.
+      </p>
+    </div>
+    <form-customer-info class="w-1/2">
+      <form action="">
+        <div class="flex flex-col">
+          <label for="name">Name</label>
+          <input required type="text" id="name" name="name" class="border border-gray-400 p-2 mb-4">
+        </div>
+        <div class="flex flex-col">
+          <label for="email">Email</label>
+          <input required type="email" id="email" name="email" class="border border-gray-400 p-2 mb-4">
+        </div>
+        <div class="flex flex-col">
+          <label for="occupation">Occupation</label>
+          <input type="text" id="occupation" name="occupation" class="border border-gray-400 p-2 mb-4">
+        </div>
+        <div class="flex flex-col">
+          <label for="language">Language</label>
+          <select name="language" id="language" class="border border-gray-400 p-2 mb-4">
+            <option disabled selected value></option>
+            <option value="english">English</option>
+            <option value="french">French</option>
+            <option value="spanish">Spanish</option>
+            <option value="german">German</option>
+          </select>
+        </div>
+        <button type="submit" class="bg-blue-500 text-white p-2 rounded">Submit</button>
+        <button type="reset" class="bg-red-500 text-white p-2 rounded ml-2">Reset</button>
+      </form>
+    </form-customer-info>
+  </div>
+</div>

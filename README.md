@@ -6,8 +6,7 @@
 
 # Launch commands
 ```sh
-npm run vite # Launch Vite compiler Scss + js
-npm run dev # Launch server Shopify
+npm run dev # Launch Vite + Shopify server 
 ```
 
 # Dawn
