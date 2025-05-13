@@ -302,6 +302,10 @@
       render 'vite-tag' with 'theme.scss'
       render 'vite-tag' with 'theme.js'
     %}
+
+    {% if request.page_type == 'index' %}
+      <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer></script>
+    {% endif %}
   </head>
 
   <body class="gradient{% if settings.animations_hover_elements != 'none' %} animate--hover-{{ settings.animations_hover_elements }}{% endif %}">
