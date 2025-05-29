@@ -28,4 +28,10 @@ export default defineConfig({
     }),
     tailwindcss(),
   ],
+  server: {
+    cors: {
+      origin:
+        /^https?:\/\/(?:(?:[^:]+\.)?localhost|127\.0\.0\.1|([A-Za-z0-9\-\.]+)?(\.myshopify\.com)|\[::1\])(?::\d+)?$/,
+    },
+  },
 });
