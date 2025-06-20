@@ -42,7 +42,7 @@ class APIGraphQL extends HTMLElement {
 
   initCaptcha() {
     this.elCaptcha = document.querySelector('#captcha_storefront_api');
-    if (!this.elCaptcha) return;
+    if (!this.elCaptcha || !this.captcha_site_key) return;
 
     grecaptcha.render(this.elCaptcha, {
       sitekey: this.captcha_site_key,
@@ -82,7 +82,7 @@ class APIGraphQL extends HTMLElement {
   async handleStoreCustomer(e) {
     e.preventDefault();
 
-    if (this.elCaptcha) {
+    if (this.elCaptcha && this.captcha_site_key) {
       const captchaResponse = await grecaptcha.getResponse();
       if (!captchaResponse) {
         alert('Please complete the CAPTCHA');
