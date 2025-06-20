@@ -4,6 +4,8 @@ class APIGraphQL extends HTMLElement {
     this.el = this;
     this.keyStorefront = this.getAttribute('data-storefront-api-key');
     this.keyAdmin = this.getAttribute('data-admin-api-key');
+    this.captcha_site_key = this.getAttribute('data-captcha-site-key');
+    this.captcha_secret = this.getAttribute('data-captcha-secret');
 
     this.elFormStoreCustomer = this.querySelector('form[data-storefront-customer]');
     this.elBtnFormStoreCustomer = this.elFormStoreCustomer.querySelector('button[type="submit"]');
@@ -24,7 +26,9 @@ class APIGraphQL extends HTMLElement {
   }
 
   connectedCallback() {
-    this.elBtnFormStoreCustomer.addEventListener('click', this.handleStoreCustomer.bind(this));
+    this.initCaptcha();
+
+    this.elFormStoreCustomer.addEventListener('submit', this.handleStoreCustomer.bind(this));
 
     this.elBtnStoreProduct.addEventListener('click', this.handleStoreProduct.bind(this));
 
@@ -36,9 +40,61 @@ class APIGraphQL extends HTMLElement {
     // this.handleStoreCustomer();
   }
 
+  initCaptcha() {
+    this.elCaptcha = document.querySelector('#captcha_storefront_api');
+    if (!this.elCaptcha || !this.captcha_site_key) return;
+
+    grecaptcha.render(this.elCaptcha, {
+      sitekey: this.captcha_site_key,
+      theme: 'light',
+    });
+  }
+
+  async verifyCaptcha(captchaResponse) {
+    return await fetch('https://www.google.com/recaptcha/api/siteverify', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+      body: new URLSearchParams({
+        secret: this.captcha_secret,
+        response: captchaResponse,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.success) {
+          console.log('Captcha verified successfully:', data);
+          // Proceed with form submission or other actions
+          return true;
+        } else {
+          console.error('Captcha verification failed:', data);
+        }
+      })
+      .catch((error) => {
+        console.error('Error verifying captcha:', error);
+      })
+      .finally(() => {
+        grecaptcha.reset(this.elCaptcha);
+      });
+  }
+
   async handleStoreCustomer(e) {
     e.preventDefault();
-    console.log('handleStoreCustomer');
+
+    if (this.elCaptcha && this.captcha_site_key) {
+      const captchaResponse = await grecaptcha.getResponse();
+      if (!captchaResponse) {
+        alert('Please complete the CAPTCHA');
+        return;
+      } else {
+        const valide_captcha = await this.verifyCaptcha(captchaResponse);
+        if (!valide_captcha) {
+          alert('CAPTCHA verification failed. Please try again.');
+          return;
+        }
+      }
+    }
 
     const formData = new FormData(this.elFormStoreCustomer);
     const data = Object.fromEntries(formData.entries());
@@ -76,9 +132,9 @@ class APIGraphQL extends HTMLElement {
 
     await this.fetchData(this.URL_storefront, headers, query).then(async (response) => {
       const accessToken = response.data.customerAccessTokenCreate.customerAccessToken.accessToken;
-      console.log('response1', accessToken);
+      // console.log('response1', accessToken);
       await this.fetchData(this.URL_storefront, headers, query2(accessToken)).then((response) => {
-        console.log('response2', response.data.customer);
+        // console.log('response2', response.data.customer);
         this.fillData(response.data.customer, this.elStoreData);
       });
       // this.fillData(response.data, this.elStoreData);
