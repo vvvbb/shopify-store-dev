@@ -484,6 +484,7 @@
       "last_name": "Last name",
       "email": "Email",
       "password": "Password",
+      "occupation": "Occupation",
       "submit": "Create"
     },
     "reset_password": {

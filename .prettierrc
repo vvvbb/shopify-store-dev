@@ -1,0 +1,30 @@
+{
+  "plugins": [
+    "@shopify/prettier-plugin-liquid"
+  ],
+  "tabWidth": 2,
+  "useTabs": true,
+  "semi": true,
+  "singleQuote": false,
+  "bracketSpacing": true,
+  "singleAttributePerLine": false,
+  "liquidSingleQuote": true,
+  "embeddedSingleQuote": true,
+  "overrides": [
+    {
+      "files": "*.scss",
+      "options": {
+        "parser": "scss"
+      }
+    },
+    {
+      "files": "*.liquid",
+      "options": {
+        "parser": "liquid-html",
+        "singleQuote": false,
+        "htmlWhitespaceSensitivity": "ignore",
+        "indentSchema": true
+      }
+    }
+  ]
+}
