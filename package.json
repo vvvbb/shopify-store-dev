@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "run-p \"shopify:dev\" \"vite\"",
+    "dev": "run-p \"shopify:dev\" \"vite\" \"prettier:watch\"",
     "build": "shopify theme build",
     "shopify:dev": "shopify theme dev --store=vincent-store-dev.myshopify.com",
     "shopify:build": "shopify theme build",
