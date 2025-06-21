@@ -127,6 +127,17 @@
         {{ form.errors.messages.password }}.
       </span>
     {%- endif -%}
+    <div class="field">
+      <input
+        type="occupation"
+        name="customer[note][Occupation]"
+        id="RegisterForm-occupation"
+        placeholder="{{ 'customer.register.occupation' | t }}"
+      >
+      <label for="RegisterForm-occupation">
+        {{ 'customer.register.occupation' | t }}
+      </label>
+    </div>
     <button>
       {{ 'customer.register.submit' | t }}
     </button>
