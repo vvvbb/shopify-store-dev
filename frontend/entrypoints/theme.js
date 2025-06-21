@@ -1,8 +1,8 @@
 // Components
-import '@/components/Slider';
+import "@/components/Slider";
 
 export default function initTheme() {
-  console.log('Theme initialized');
+	console.log("Theme initialized");
 }
 
 initTheme();
