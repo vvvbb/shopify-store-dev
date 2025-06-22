@@ -373,6 +373,17 @@
 				recipientFormCollapsed: `{{ 'recipient.form.collapsed' | t }}`,
 				countrySelectorSearchCount: `{{ 'localization.country_results_count' | t: count: '[count]' }}`,
 			};
+
+			window.theme = {
+				name: '{{ shop.name | escape }}',
+				id: {{ shop.id }},
+				currency: '{{ localization.currency.iso_code }}',
+				currencySymbol: '{{ localization.currency.symbol }}',
+				locale: '{{ request.locale.iso_code }}',
+				availableCountries: {{ localization.available_countries | json }},
+				availableLanguages: {{ localization.available_languages | json }},
+				settings: {{ settings | json }}
+			};
 		</script>
 
 		{%- if settings.predictive_search_enabled -%}
