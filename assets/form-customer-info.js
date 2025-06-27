@@ -8,7 +8,6 @@ class FormCustomerInfo extends HTMLElement {
 		this.version = "2025-04";
 		this.shop = "vincent-store-dev";
 		this.URL_storefront = `https://${this.shop}.myshopify.com/api/${this.version}/graphql.json`;
-
 	}
 
 	connectedCallback() {
@@ -29,6 +28,7 @@ class FormCustomerInfo extends HTMLElement {
 			const token = await this.getAccessToken(data);
 			const customer = await this.updateCustomerInfo(data, token);
 			console.log("Customer updated successfully:", customer);
+			this.sectionRendering();
 		} catch (error) {
 			alert(error.message || "An error occurred while updating customer info.");
 		}
@@ -120,13 +120,13 @@ class FormCustomerInfo extends HTMLElement {
 			throw new Error("Failed to update customer");
 		}
 
-			const customer = response.data.customerUpdate.customer;
-			if (!customer) {
-				console.error("No access token returned");
-				throw new Error("No access token returned");
-			}
+		const customer = response.data.customerUpdate.customer;
+		if (!customer) {
+			console.error("No access token returned");
+			throw new Error("No access token returned");
+		}
 
-			return customer;
+		return customer;
 	}
 
 	async fetchData(query, variables = {}) {
@@ -147,6 +147,23 @@ class FormCustomerInfo extends HTMLElement {
 				return response.json();
 			})
 			.catch((error) => console.error("Error fetching data:", error));
+	}
+
+	sectionRendering() {
+		const request = new XMLHttpRequest();
+
+		request.addEventListener("load", (e) => {
+			const parsedState = JSON.parse(e.target.responseText);
+			const SourceSelected = parsedState["form-customer-info"];
+			const html = new DOMParser().parseFromString(SourceSelected, "text/html");
+			const sourceElement = html.querySelector("#form-customer-info");
+
+			const targetElement = document.querySelector("#form-customer-info");
+			targetElement.replaceWith(sourceElement);
+		});
+
+		request.open("GET", "/?sections=form-customer-info", true);
+		request.send();
 	}
 }
 

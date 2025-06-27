@@ -1,13 +1,14 @@
 <script src="{{ 'form-customer-info.js' | asset_url }}" defer="defer"></script>
 
-<div class="bg-gray-300 py-20 px-40">
+<div id="form-customer-info" class="bg-gray-300 py-20 px-40">
 	<h1 class="text-center text-2xl font-bold">Customer Informations</h1>
 	<div class="flex flex-row justify-center items-center gap-20">
 		<div class="w-1/2">
-			<h2>Lorem, ipsum dolor.</h2>
+			<h2>Lorem, ipsum dolor {{ customer.name }}.</h2>
 			<p>
 				Lorem ipsum dolor sit, amet consectetur adipisicing elit. Nisi harum consectetur dolore voluptatum itaque autem,
 				cum illo explicabo animi fugiat officia et laudantium porro ullam quibusdam obcaecati doloribus ex molestias.
+				{{ 'now' | date: '%H:%M:%S' }}
 			</p>
 		</div>
 		<form-customer-info class="w-1/2">
@@ -63,6 +64,7 @@
 							id="password"
 							name="password"
 							class="border border-gray-400 p-2 mb-4"
+							value="test123test"
 						>
 					</div>
 				</div>
