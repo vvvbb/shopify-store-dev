@@ -19,6 +19,16 @@
 		{{ 'customer.register.title' | t }}
 	</h1>
 	{%- form 'create_customer', novalidate: 'novalidate' -%}
+		<input
+			type="hidden"
+			name="customer[note][language]"
+			value="{{ request.locale.iso_code }}_{{ localization.country.iso_code }}"
+		>
+		<input
+			type="hidden"
+			name="customer[tags]"
+			value="{{ request.locale.iso_code }}_{{ localization.country.iso_code }}"
+		>
 		{%- if form.errors -%}
 			<h2 class="form__message" tabindex="-1" autofocus>
 				<span class="svg-wrapper">
