@@ -129,7 +129,7 @@
 		{%- endif -%}
 		<div class="field">
 			<input
-				type="occupation"
+				type="text"
 				name="customer[note][Occupation]"
 				id="RegisterForm-occupation"
 				placeholder="{{ 'customer.register.occupation' | t }}"
@@ -138,9 +138,15 @@
 				{{ 'customer.register.occupation' | t }}
 			</label>
 		</div>
-		<button>
-			{{ 'customer.register.submit' | t }}
-		</button>
+		<div class="field">
+			<select name="customer[note][Gender]">
+				<option selected disabled value="">{{ 'customer.register.gender.gender' | t }}</option>
+				<option value="man">{{ 'customer.register.gender.man' | t }}</option>
+				<option value="woman">{{ 'customer.register.gender.woman' | t }}</option>
+				<option value="other">{{ 'customer.register.gender.other' | t }}</option>
+			</select>
+		</div>
+		<button>{{ 'customer.register.submit' | t }}</button>
 	{%- endform -%}
 </div>
 
